@@ -4,15 +4,15 @@ import deleteIcon from "../../assets/images/delete.svg";
 
 const Transaction = () => {
   return (
-    <li class="transaction income">
+    <li className="transaction income">
       <p>Earned this month</p>
-      <div class="right">
+      <div className="right">
         <p>৳ 100</p>
-        <button class="link">
-          <img class="icon" src={editIcon} alt="edit" />
+        <button className="link">
+          <img className="icon" src={editIcon} alt="edit" />
         </button>
-        <button class="link">
-          <img class="icon" src={deleteIcon} alt="delete" />
+        <button className="link">
+          <img className="icon" src={deleteIcon} alt="delete" />
         </button>
       </div>
     </li>
