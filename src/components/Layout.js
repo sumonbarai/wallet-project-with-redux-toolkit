@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getTransactionsThunk } from "../feature/transaction/transactionSlice";
 
 const Layout = ({ children }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTransactionsThunk());
+  }, [dispatch]);
   return (
     <div className="App">
       <div className="header">

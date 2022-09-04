@@ -7,7 +7,7 @@ const Form = () => {
   const [type, setType] = useState("");
   const [amount, setAmount] = useState("");
   const dispatch = useDispatch();
-  const { isLoading, isError } = useSelector((state) => state.transaction);
+  const { isError } = useSelector((state) => state.transaction);
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -73,8 +73,8 @@ const Form = () => {
         <button className="btn">Add Transaction</button>
       </form>
 
+      {isError && <p className="error">some error can't be added </p>}
       <button className="btn cancel_edit">Cancel Edit</button>
-      {isError && <p className="error">some error problem</p>}
     </div>
   );
 };
