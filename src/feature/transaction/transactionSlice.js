@@ -11,6 +11,7 @@ const initialState = {
   isError: false,
   transactions: [],
   error: "",
+  editedData: {},
 };
 
 // transaction thunk
@@ -48,6 +49,14 @@ export const deleteTransactionThunk = createAsyncThunk(
 const transactionSlice = createSlice({
   name: "transaction",
   initialState,
+  reducers: {
+    activeEdit: (state, action) => {
+      state.editedData = action.payload;
+    },
+    cancelEdit: (state) => {
+      state.editedData = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       //  getTransaction
@@ -74,7 +83,7 @@ const transactionSlice = createSlice({
       .addCase(addTransactionThunk.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
-        state.transactions.push(action.payload);
+        state.transactions.unshift(action.payload);
       })
       .addCase(addTransactionThunk.rejected, (state, action) => {
         state.isError = true;
@@ -120,3 +129,4 @@ const transactionSlice = createSlice({
 });
 
 export default transactionSlice.reducer;
+export const { activeEdit, cancelEdit } = transactionSlice.actions;
