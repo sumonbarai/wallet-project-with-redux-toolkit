@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTransactionThunk,
@@ -23,6 +24,7 @@ const Form = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(addTransactionThunk({ name, type, amount: Number(amount) }));
+    toast.success("Successfully added!");
     resetFrom();
   };
 
@@ -36,6 +38,7 @@ const Form = () => {
     };
     dispatch(editTransactionThunk({ id, data }));
     setEditMode(false);
+    toast.success("Successfully Updated!");
     resetFrom();
   };
   useEffect(() => {

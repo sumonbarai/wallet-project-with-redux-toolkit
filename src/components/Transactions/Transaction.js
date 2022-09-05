@@ -6,12 +6,14 @@ import {
   activeEdit,
   deleteTransactionThunk,
 } from "../../feature/transaction/transactionSlice";
+import toast from "react-hot-toast";
 
 const Transaction = ({ singleTransaction }) => {
   const dispatch = useDispatch();
   const { name, type, amount, id } = singleTransaction || {};
   const handleDelete = (id) => {
     dispatch(deleteTransactionThunk(id));
+    toast.success("Successfully deleted!");
   };
 
   const handleUpdate = () => {

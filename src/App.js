@@ -4,6 +4,7 @@ import Form from "./components/Form";
 import Transactions from "./components/Transactions/Transactions";
 import { Provider } from "react-redux";
 import store from "./app/store";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Transactions></Transactions>
         </Layout>
       </Provider>
+      <Toaster />
     </div>
   );
 }
