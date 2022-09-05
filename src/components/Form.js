@@ -12,6 +12,12 @@ const Form = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(addTransactionThunk({ name, type, amount: Number(amount) }));
+    resetFrom();
+  };
+  const resetFrom = () => {
+    setName("");
+    setType("");
+    setAmount("");
   };
   return (
     <div className="form">

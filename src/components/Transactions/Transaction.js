@@ -1,9 +1,15 @@
 import React from "react";
 import editIcon from "../../assets/images/edit.svg";
 import deleteIcon from "../../assets/images/delete.svg";
+import { useDispatch } from "react-redux";
+import { deleteTransactionThunk } from "../../feature/transaction/transactionSlice";
 
 const Transaction = ({ singleTransaction }) => {
-  const { name, type, amount } = singleTransaction || {};
+  const dispatch = useDispatch();
+  const { name, type, amount, id } = singleTransaction || {};
+  const handleDelete = (id) => {
+    dispatch(deleteTransactionThunk(id));
+  };
   return (
     <li className={`transaction ${type}`}>
       {/* li color change by class income or expense */}
@@ -14,7 +20,12 @@ const Transaction = ({ singleTransaction }) => {
           <img className="icon" src={editIcon} alt="edit" />
         </button>
         <button className="link">
-          <img className="icon" src={deleteIcon} alt="delete" />
+          <img
+            className="icon"
+            src={deleteIcon}
+            alt="delete"
+            onClick={() => handleDelete(id)}
+          />
         </button>
       </div>
     </li>
