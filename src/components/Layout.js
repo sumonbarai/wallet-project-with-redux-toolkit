@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { getTransactionsThunk } from "../feature/transaction/transactionSlice";
 
 const Layout = ({ children }) => {
@@ -12,7 +13,9 @@ const Layout = ({ children }) => {
   return (
     <div className="App">
       <div className="header">
-        <h1>Expense Tracker</h1>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <h1>Expense Tracker</h1>
+        </Link>
       </div>
 
       <div className="main">

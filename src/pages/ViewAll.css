@@ -1,0 +1,31 @@
+.viewAll h2 {
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+.viewAll .filter-area {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.viewAll .filter-area .left-area {
+  display: flex;
+  align-items: center;
+}
+.viewAll .filter-area .left-area span {
+  display: flex;
+}
+.viewAll .filter-area .left-area span input,
+.viewAll .filter-area .left-area span label {
+  margin: 0 5px;
+  cursor: pointer;
+}
+.viewAll .filter-area .right-area input {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+}
+.viewAll .filter-area .right-area input:focus {
+  outline: 1px solid #ddd;
+}

@@ -183,6 +183,7 @@ label {
   overflow-y: auto;
 }
 
+/* responsive design */
 @media (max-width: 450px) {
   .top_card,
   .form {
