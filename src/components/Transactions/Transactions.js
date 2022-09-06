@@ -19,12 +19,14 @@ const Transactions = () => {
     content = <p>No transaction available</p>;
   }
   if (!isLoading && !isError && transactions?.length > 0) {
-    content = transactions.map((singleTransaction) => (
-      <Transaction
-        key={singleTransaction.id}
-        singleTransaction={singleTransaction}
-      ></Transaction>
-    ));
+    content = transactions
+      .slice(0, 5)
+      .map((singleTransaction) => (
+        <Transaction
+          key={singleTransaction.id}
+          singleTransaction={singleTransaction}
+        ></Transaction>
+      ));
   }
 
   return (
@@ -33,6 +35,7 @@ const Transactions = () => {
 
       <div className="conatiner_of_list_of_transactions">
         <ul>{content}</ul>
+        <button className="btn">View all transaction</button>
       </div>
     </>
   );
