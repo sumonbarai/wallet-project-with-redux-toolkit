@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   getViewAllTransactions,
+  getViewBySearchTransactions,
   getViewExpenseTransactions,
   getViewIncomeTransactions,
 } from "./filterAPI";
@@ -27,10 +28,18 @@ export const getViewIncomeTransactionsThunk = createAsyncThunk(
     return transactions;
   }
 );
+
 export const getViewExpenseTransactionsThunk = createAsyncThunk(
   "filter/getViewExpenseTransactionsThunk",
   async (searchQuery) => {
     const transactions = await getViewExpenseTransactions(searchQuery);
+    return transactions;
+  }
+);
+export const getViewBySearchTransactionsThunk = createAsyncThunk(
+  "filter/getViewBySearchTransactionsThunk",
+  async (searchQuery) => {
+    const transactions = await getViewBySearchTransactions(searchQuery);
     return transactions;
   }
 );
@@ -86,6 +95,23 @@ const filterSlice = createSlice({
         state.transactions = action.payload.reverse();
       })
       .addCase(getViewExpenseTransactionsThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.error = action.error.message;
+        state.transactions = [];
+      })
+      // get search transaction
+      .addCase(getViewBySearchTransactionsThunk.pending, (state, action) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(getViewBySearchTransactionsThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.error = "";
+        state.transactions = action.payload.reverse();
+      })
+      .addCase(getViewBySearchTransactionsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.error = action.error.message;

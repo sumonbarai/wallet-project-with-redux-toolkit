@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Transaction from "../components/Transactions/Transaction";
 import {
   getViewAllTransactionsThunk,
+  getViewBySearchTransactionsThunk,
   getViewExpenseTransactionsThunk,
   getViewIncomeTransactionsThunk,
 } from "../feature/filter/filterSlice";
@@ -10,10 +11,12 @@ import "./ViewAll.css";
 
 const ViewAll = () => {
   const [type, setType] = useState("all");
+  const [input, setInput] = useState("");
   const dispatch = useDispatch();
   const { transactions, isLoading, isError } = useSelector(
     (state) => state.filter
   );
+
   // what is render ?
   let content = null;
   if (isLoading) {
@@ -34,6 +37,11 @@ const ViewAll = () => {
     ));
   }
 
+  const handleSearch = (value) => {
+    setInput(value);
+    setType(value);
+  };
+
   useEffect(() => {
     if (type === "all") {
       dispatch(getViewAllTransactionsThunk());
@@ -43,6 +51,17 @@ const ViewAll = () => {
       dispatch(getViewExpenseTransactionsThunk("type_like=expense"));
     }
   }, [dispatch, type]);
+
+  useEffect(() => {
+    if (input) {
+      let timeout = setTimeout(() => {
+        dispatch(getViewBySearchTransactionsThunk(input));
+      }, 500);
+      return () => clearTimeout(timeout);
+    } else {
+      setType("all");
+    }
+  }, [dispatch, input]);
 
   return (
     <div className="viewAll" style={{ width: "100%" }}>
@@ -78,7 +97,11 @@ const ViewAll = () => {
           </span>
         </div>
         <div className="right-area">
-          <input type="text" placeholder="Search By Name" />
+          <input
+            type="search"
+            placeholder="Search By Name"
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
       </div>
       <ul style={{ width: "100%" }}>{content}</ul>
