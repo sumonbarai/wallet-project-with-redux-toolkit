@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Transaction from "../components/Transactions/Transaction";
-import { getViewAllTransactionsThunk } from "../feature/filter/filterSlice";
+import {
+  getViewAllTransactionsThunk,
+  getViewExpenseTransactionsThunk,
+  getViewIncomeTransactionsThunk,
+} from "../feature/filter/filterSlice";
 import "./ViewAll.css";
 
 const ViewAll = () => {
+  const [type, setType] = useState("all");
   const dispatch = useDispatch();
-  const { all, isLoading, isError } = useSelector((state) => state.filter);
-
+  const { transactions, isLoading, isError } = useSelector(
+    (state) => state.filter
+  );
   // what is render ?
   let content = null;
   if (isLoading) {
@@ -16,11 +22,11 @@ const ViewAll = () => {
   if (!isLoading && isError) {
     content = <p>There are some error</p>;
   }
-  if (!isLoading && !isError && all?.length === 0) {
+  if (!isLoading && !isError && transactions?.length === 0) {
     content = <p>No transaction available</p>;
   }
-  if (!isLoading && !isError && all?.length > 0) {
-    content = all.map((singleTransaction) => (
+  if (!isLoading && !isError && transactions?.length > 0) {
+    content = transactions.map((singleTransaction) => (
       <Transaction
         key={singleTransaction.id}
         singleTransaction={singleTransaction}
@@ -29,8 +35,14 @@ const ViewAll = () => {
   }
 
   useEffect(() => {
-    dispatch(getViewAllTransactionsThunk());
-  }, [dispatch]);
+    if (type === "all") {
+      dispatch(getViewAllTransactionsThunk());
+    } else if (type === "income") {
+      dispatch(getViewIncomeTransactionsThunk("type_like=income"));
+    } else if (type === "expense") {
+      dispatch(getViewExpenseTransactionsThunk("type_like=expense"));
+    }
+  }, [dispatch, type]);
 
   return (
     <div className="viewAll" style={{ width: "100%" }}>
@@ -39,11 +51,29 @@ const ViewAll = () => {
         <div className="left-area">
           Filters :
           <span>
-            <input type="radio" name="filter" id="all" checked />
+            <input
+              type="radio"
+              name="filter"
+              id="all"
+              checked={type === "all"}
+              onChange={() => setType("all")}
+            />
             <label htmlFor="all">All</label>
-            <input type="radio" name="filter" id="income" />
+            <input
+              type="radio"
+              name="filter"
+              id="income"
+              checked={type === "income"}
+              onChange={() => setType("income")}
+            />
             <label htmlFor="income">income</label>
-            <input type="radio" name="filter" id="expense" />
+            <input
+              type="radio"
+              name="filter"
+              id="expense"
+              checked={type === "expense"}
+              onChange={() => setType("expense")}
+            />
             <label htmlFor="expense">expense</label>
           </span>
         </div>
