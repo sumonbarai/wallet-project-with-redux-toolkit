@@ -7,6 +7,7 @@ import {
   deleteTransactionThunk,
 } from "../../feature/transaction/transactionSlice";
 import toast from "react-hot-toast";
+import { modalPopUp } from "../../feature/filter/filterSlice";
 
 const Transaction = ({ singleTransaction }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Transaction = ({ singleTransaction }) => {
   };
 
   const handleUpdate = () => {
+    dispatch(modalPopUp());
     dispatch(activeEdit(singleTransaction));
   };
 

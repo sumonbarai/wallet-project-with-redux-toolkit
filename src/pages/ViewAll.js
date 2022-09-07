@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Modal from "../components/Modal/Modal";
 import Transaction from "../components/Transactions/Transaction";
 import {
   getViewAllTransactionsThunk,
@@ -19,6 +20,8 @@ const ViewAll = () => {
   const { transactions, isLoading, isError } = useSelector(
     (state) => state.filter
   );
+
+  const { modal } = useSelector((state) => state.filter);
 
   const numberOfPage = Math.ceil(transactions.length / 10);
   // what is render ?
@@ -140,6 +143,7 @@ const ViewAll = () => {
           </button>
         ))}
       </div>
+      {modal && <Modal></Modal>}
     </div>
   );
 };

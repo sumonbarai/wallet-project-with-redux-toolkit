@@ -11,6 +11,7 @@ const initialState = {
   isError: false,
   error: "",
   transactions: [],
+  modal: false,
 };
 
 export const getViewAllTransactionsThunk = createAsyncThunk(
@@ -47,6 +48,14 @@ export const getViewBySearchTransactionsThunk = createAsyncThunk(
 const filterSlice = createSlice({
   name: "filter",
   initialState,
+  reducers: {
+    modalPopUp: (state, action) => {
+      state.modal = true;
+    },
+    modalClose: (state, action) => {
+      state.modal = false;
+    },
+  },
   extraReducers: (builder) => {
     // getViewAll
     builder
@@ -121,3 +130,4 @@ const filterSlice = createSlice({
 });
 
 export default filterSlice.reducer;
+export const { modalPopUp, modalClose } = filterSlice.actions;

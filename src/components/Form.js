@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { modalClose } from "../feature/filter/filterSlice";
 import {
   addTransactionThunk,
   cancelEdit,
@@ -30,6 +31,8 @@ const Form = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    dispatch(modalClose());
+
     const { id } = editedData;
     const data = {
       name,
@@ -40,6 +43,11 @@ const Form = () => {
     setEditMode(false);
     toast.success("Successfully Updated!");
     resetFrom();
+  };
+
+  const cancelEditBtn = () => {
+    dispatch(modalClose());
+    dispatch(cancelEdit());
   };
   useEffect(() => {
     const { id, name, type, amount } = editedData;
@@ -118,10 +126,7 @@ const Form = () => {
       {isError && <p className="error">some error can't be added </p>}
 
       {editMode && (
-        <button
-          className="btn cancel_edit"
-          onClick={() => dispatch(cancelEdit())}
-        >
+        <button className="btn cancel_edit" onClick={cancelEditBtn}>
           Cancel Edit
         </button>
       )}
