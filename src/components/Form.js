@@ -32,7 +32,7 @@ const Form = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(modalClose());
-
+    dispatch(cancelEdit());
     const { id } = editedData;
     const data = {
       name,
