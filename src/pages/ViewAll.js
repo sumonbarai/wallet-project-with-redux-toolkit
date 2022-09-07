@@ -12,11 +12,15 @@ import "./ViewAll.css";
 const ViewAll = () => {
   const [type, setType] = useState("all");
   const [input, setInput] = useState("");
+  const [page, setPage] = useState(0);
+  const [sliceStart, setSliceStart] = useState(0);
+  const [SliceEnd, setSliceEnd] = useState(10);
   const dispatch = useDispatch();
   const { transactions, isLoading, isError } = useSelector(
     (state) => state.filter
   );
 
+  const numberOfPage = Math.ceil(transactions.length / 10);
   // what is render ?
   let content = null;
   if (isLoading) {
@@ -29,25 +33,41 @@ const ViewAll = () => {
     content = <p>No transaction available</p>;
   }
   if (!isLoading && !isError && transactions?.length > 0) {
-    content = transactions.map((singleTransaction) => (
-      <Transaction
-        key={singleTransaction.id}
-        singleTransaction={singleTransaction}
-      ></Transaction>
-    ));
+    content = transactions
+      .slice(sliceStart, SliceEnd)
+      .map((singleTransaction) => (
+        <Transaction
+          key={singleTransaction.id}
+          singleTransaction={singleTransaction}
+        ></Transaction>
+      ));
   }
 
   const handleSearch = (value) => {
     setInput(value);
     setType(value);
   };
+  const handlePaginationBtn = (number) => {
+    setPage(number);
+    setSliceStart(10 * number + 1 - 1);
+    setSliceEnd(10 * (number + 1));
+  };
 
   useEffect(() => {
     if (type === "all") {
+      setSliceStart(0);
+      setSliceEnd(10);
+      setPage(0);
       dispatch(getViewAllTransactionsThunk());
     } else if (type === "income") {
+      setSliceStart(0);
+      setSliceEnd(10);
+      setPage(0);
       dispatch(getViewIncomeTransactionsThunk("type_like=income"));
     } else if (type === "expense") {
+      setSliceStart(0);
+      setSliceEnd(10);
+      setPage(0);
       dispatch(getViewExpenseTransactionsThunk("type_like=expense"));
     }
   }, [dispatch, type]);
@@ -55,6 +75,9 @@ const ViewAll = () => {
   useEffect(() => {
     if (input) {
       let timeout = setTimeout(() => {
+        setSliceStart(0);
+        setSliceEnd(10);
+        setPage(0);
         dispatch(getViewBySearchTransactionsThunk(input));
       }, 500);
       return () => clearTimeout(timeout);
@@ -105,6 +128,18 @@ const ViewAll = () => {
         </div>
       </div>
       <ul style={{ width: "100%" }}>{content}</ul>
+
+      <div className="pagination">
+        {[...Array(numberOfPage).keys()].map((number) => (
+          <button
+            className={page === number ? "selected" : ""}
+            key={number}
+            onClick={() => handlePaginationBtn(number)}
+          >
+            {number + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

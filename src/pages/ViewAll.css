@@ -29,3 +29,15 @@
 .viewAll .filter-area .right-area input:focus {
   outline: 1px solid #ddd;
 }
+.viewAll .pagination button {
+  border-radius: 5px;
+  background: orange;
+  padding: 10px;
+  border: none;
+  margin: 2px;
+  cursor: pointer;
+}
+.selected {
+  background: #4338ca !important;
+  color: #fff;
+}
