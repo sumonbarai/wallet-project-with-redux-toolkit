@@ -20,10 +20,15 @@ const ViewAll = () => {
   const { transactions, isLoading, isError } = useSelector(
     (state) => state.filter
   );
+  const { transactions: render } = useSelector((state) => state.transaction);
 
   const { modal } = useSelector((state) => state.filter);
-
   const numberOfPage = Math.ceil(transactions.length / 10);
+
+  useEffect(() => {
+    dispatch(getViewAllTransactionsThunk());
+  }, [render, dispatch]);
+
   // what is render ?
   let content = null;
   if (isLoading) {
