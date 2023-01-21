@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loading from "../loading/Loading";
 import Transaction from "./Transaction";
 
 const Transactions = () => {
@@ -13,7 +14,7 @@ const Transactions = () => {
   // what is render ?
   let content = null;
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <Loading />;
   }
   if (!isLoading && isError) {
     content = <p>There are some error</p>;

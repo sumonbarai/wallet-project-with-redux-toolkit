@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../components/loading/Loading";
 import Modal from "../components/Modal/Modal";
 import Transaction from "../components/Transactions/Transaction";
 import {
@@ -32,7 +33,7 @@ const ViewAll = () => {
   // what is render ?
   let content = null;
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <Loading />;
   }
   if (!isLoading && isError) {
     content = <p>There are some error</p>;
