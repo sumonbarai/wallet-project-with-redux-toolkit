@@ -17,8 +17,8 @@ const initialState = {
 // transaction thunk
 export const getTransactionsThunk = createAsyncThunk(
   "transaction/getTransactionsThunk",
-  async () => {
-    const transactions = await getTransactions();
+  async ({ limit }) => {
+    const transactions = await getTransactions(limit);
     return transactions;
   }
 );

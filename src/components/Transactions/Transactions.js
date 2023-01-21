@@ -8,6 +8,7 @@ const Transactions = () => {
   const { transactions, isLoading, isError } = useSelector(
     (state) => state.transaction
   );
+  console.log(transactions);
 
   // what is render ?
   let content = null;
@@ -21,14 +22,12 @@ const Transactions = () => {
     content = <p>No transaction available</p>;
   }
   if (!isLoading && !isError && transactions?.length > 0) {
-    content = transactions
-      .slice(0, 5)
-      .map((singleTransaction) => (
-        <Transaction
-          key={singleTransaction.id}
-          singleTransaction={singleTransaction}
-        ></Transaction>
-      ));
+    content = transactions.map((singleTransaction) => (
+      <Transaction
+        key={singleTransaction.id}
+        singleTransaction={singleTransaction}
+      ></Transaction>
+    ));
   }
 
   const handleAllViewPage = () => {

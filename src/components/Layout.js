@@ -7,14 +7,14 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTransactionsThunk());
+    dispatch(getTransactionsThunk({ limit: 5 }));
   }, [dispatch]);
 
   return (
     <div className="App">
       <div className="header">
         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          <h1>Expense Tracker</h1>
+          <h1>My Wallet Application</h1>
         </Link>
       </div>
 
@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         <div className="container">{children}</div>
       </div>
 
-      <div className="footer">&copy;2022 Learn with Sumit</div>
+      <div className="footer">&copy;2022 Project Design By me</div>
     </div>
   );
 };
