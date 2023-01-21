@@ -23,12 +23,14 @@ const Transactions = () => {
     content = <p>No transaction available</p>;
   }
   if (!isLoading && !isError && transactions?.length > 0) {
-    content = transactions.map((singleTransaction) => (
-      <Transaction
-        key={singleTransaction.id}
-        singleTransaction={singleTransaction}
-      ></Transaction>
-    ));
+    content = transactions
+      .slice(0, 5)
+      .map((singleTransaction) => (
+        <Transaction
+          key={singleTransaction.id}
+          singleTransaction={singleTransaction}
+        ></Transaction>
+      ));
   }
 
   const handleAllViewPage = () => {
