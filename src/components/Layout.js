@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTransactionsThunk({ limit: 5 }));
+    dispatch(getTransactionsThunk());
   }, [dispatch]);
 
   return (
